@@ -4,13 +4,10 @@ import request from 'graphql-request';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
-import { Waypoint } from 'react-waypoint';
 import { Container } from '../components/container';
 import { AppProvider } from '../components/contexts/appContext';
 import { Footer } from '../components/footer';
 import { Layout } from '../components/layout';
-import { MinimalPosts } from '../components/minimal-posts';
-import { PersonalHeader } from '../components/personal-theme-header';
 import {
 	MorePostsByPublicationDocument,
 	MorePostsByPublicationQuery,
@@ -22,6 +19,11 @@ import {
 	PostsByPublicationQueryVariables,
 	PublicationFragment,
 } from '../generated/graphql';
+import { Button, Tag } from 'antd';
+import Gallery from '../components/gallery';
+import ProjectCard from '../components/cards';
+import SlantingCards from '../components/slanting-cards';
+import { PROJECT, WINNING_PROJECT } from '../lib/constants/constant';
 
 const GQL_ENDPOINT = process.env.NEXT_PUBLIC_HASHNODE_GQL_ENDPOINT;
 
@@ -54,6 +56,7 @@ export default function Index({ publication, initialPosts, initialPageInfo }: Pr
 		setPageInfo(data.publication.posts.pageInfo);
 		setLoadedMore(true);
 	};
+
 	return (
 		<AppProvider publication={publication}>
 			<Layout>
@@ -65,7 +68,7 @@ export default function Index({ publication, initialPosts, initialPageInfo }: Pr
 							publication.descriptionSEO || publication.title || `${publication.author.name}'s Blog`
 						}
 					/>
-					<meta property="twitter:card" content="summary_large_image"/>
+					<meta property="twitter:card" content="summary_large_image" />
 					<meta property="twitter:title" content={publication.displayTitle || publication.title || 'Hashnode Blog Starter Kit'} />
 					<meta property="twitter:description" content={publication.descriptionSEO || publication.title || `${publication.author.name}'s Blog`} />
 					<meta
@@ -84,17 +87,41 @@ export default function Index({ publication, initialPosts, initialPageInfo }: Pr
 					/>
 				</Head>
 				<Container className="mx-auto flex max-w-3xl flex-col items-stretch gap-10 px-5 py-10">
-					<PersonalHeader />
-					{posts.length > 0 && <MinimalPosts context="home" posts={posts} />}
-					{!loadedMore && pageInfo.hasNextPage && pageInfo.endCursor && (
-						<button className="bg-white" onClick={loadMore}>
-							Load more
-						</button>
-					)}
-					{loadedMore && pageInfo.hasNextPage && pageInfo.endCursor && (
-						<Waypoint onEnter={loadMore} bottomOffset={'10%'} />
-					)}
 
+					<h1 className='text-[20px] font-bold font-[monospace]'>Hi, I'm Shivam 👋</h1>
+					<div>
+
+
+						<p>I am a frontend developer and technical writer who loves being a part of the open-source community.
+							I work at <a href="https://triallies.com/" target='_blank'><Tag className="mr-2" color='volcano'>Triallies LLC</Tag></a>as a frontend developer,
+							where I enjoy collaborating with and learning from my colleagues. I am also a contributor at <a href="" target='_blank'><Tag className='mr-2' color='cyan'>ReactPlay</Tag></a> and have worked with various communities and organizations. Check out about my work <a href="/projects" className='text-blue-500'>here</a>.
+						</p>
+					</div>
+					<Gallery />
+
+					<div className='text-center'>
+						I write about web development, including JavaScript, React, Next.js, Tailwind CSS, and more.
+						Also, I share my experiences as a developer and the latest tech industry trends.
+					</div>
+
+					<h1 className='text-center font-mono text-[30px]'>Projects</h1>
+
+					<div className='grid justify-items-center md:grid-cols-2 gap-[80px] p-[22px] bg-[#c8c8c8] rounded-[15px]'>
+						{PROJECT.map((project) => (
+							<ProjectCard key={project.id} project={project} />
+						))}
+						<Button type='primary' size='large' className='w-full'>Check out more projects</Button>
+					</div>
+
+					<div className='text-center'>
+						<p>
+							I participate in hackathons and writeathons to improve my skills, learn new technologies, and connect with other developers. Below are some of my winning projects and articles.
+						</p>
+					</div>
+
+					{WINNING_PROJECT.map((project) => (
+						<SlantingCards key={project.title} title={project.title} description={project.description} link={project.link} image={project.image} />
+					))}
 					<Footer />
 				</Container>
 			</Layout>
