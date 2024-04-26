@@ -1,28 +1,48 @@
-import React from 'react'
+import React from 'react';
+import 'react-photo-view/dist/react-photo-view.css';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import Image from 'next/image';
 
-function Gallery() {
+export default function Gallery() {
+  const images = [
+    { url: "/../assets/images/ReactPlaymeet.jpeg", description: "First ReactPlay Team MeetUp" },
+    { url: "/../assets/images/cco_meet.png", description: "First CCOs meet with ShowwCase CEO Rong 😊" },
+    { url: "/../assets/images/fourC.webp", description: "First time selected as a speaker. Gave my first talk in an online event happend at 4C" },
+    { url: "/../assets/images/zigi.jpg", description: "" },
+    { url: "/../assets/images/gds.jpg", description: "Won a Writeathon hosted by ShowwCase" },
+    { url: "/../assets/images/gedu.jpeg", description: "First Swags from Github Education" },
+    { url: "/../assets/images/2playsamonth.jpg", description: "Won my 2nd hackathon hosted by ReactPlay" }
+  ];
+
+  const overlayRender = ({ index }: { index: number }) => {
+    const className = `
+      absolute left-0 bottom-0 p-2 w-full min-h-24
+      text-xs text-slate-300 z-50 bg-black/50
+    `;
+    return (
+      <div className={className}>
+        <div className="flex justify-between">
+          <div>{images[index].description}</div>
+          <div>{index + 1} / {images.length}</div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <section className="gallery-container">
-      <article className="container__item">
-        <img src="https://project-assets.showwcase.com/1065x/13602/1661170962346-FUfwOUvWUAIh4FS.jpeg?type=webp" alt="Fearless leader" width="800" height="534" />
-      </article>
-      <article className="container__item">
-        <img src="https://project-assets.showwcase.com/1065x/13602/1661171234272-13.08.2022_17.57.46_REC.png?type=webp" alt="Southbank - Strike a Pose" width="800" height="534" />
-      </article>
-      <article className="container__item">
-        <img src="https://pbs.twimg.com/media/Fia0-XvXkAIA-dn?format=jpg&name=900x900" alt="Tower Bridge, light trails" width="800" height="534" />
-      </article>
-      <article className="container__item">
-        <img src="https://pbs.twimg.com/media/Fcg1TPsaUAArw9M?format=jpg&name=900x900" alt="The Clyde Arc" width="800" height="534" />
-      </article>
-      <article className="container__item">
-        <img src="https://project-assets.showwcase.com/1050x700/13602/1661170894797-WhatsApp%2520Image%25202022-08-03%2520at%25205.11.17%2520PM.jpeg?type=webp" alt="Reflections at St Pauls" width="800" height="534" />
-      </article>
-      <article className="container__item">
-        <img src="https://pbs.twimg.com/media/FrR2lLUXsAAei7H?format=jpg&name=900x900" alt="Reflections at St Pauls" width="800" height="534" />
-      </article>
-    </section>
-  )
+    <PhotoProvider
+      bannerVisible={true}
+      overlayRender={overlayRender}
+    >
+      <div className="gallery-container">
+        {images.map((item, index) => (
+          <article key={index} className="container__item hover:cursor-pointer">
+            <PhotoView key={index} src={item.url}>
+              <Image src={item.url} alt={item.url} width={500} height={500} />
+            </PhotoView>
+          </article>
+        ))}
+      </div>
+    </PhotoProvider>
+  );
 }
-
-export default Gallery

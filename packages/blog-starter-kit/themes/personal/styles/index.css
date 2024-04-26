@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .hashnode-content-style{
     @apply prose break-words text-slate-950 first:prose-p:mt-0 prose-img:max-w-full prose-p:leading-snug prose-a:underline hover:prose-a:bg-primary-50 dark:hover:prose-a:text-primary-500 dark:hover:prose-a:bg-neutral-800 dark:text-neutral-50 prose-blockquote:leading-snug prose-a:leading-snug prose-figure:leading-snug prose-figcaption:leading-snug prose-pre:leading-snug prose-li:leading-snug prose-ul:leading-snug prose-ol:leading-snug prose-th:leading-snug prose-td:leading-snug lg:prose-xl dark:prose-invert dark:prose-pre:bg-neutral-900 first:prose-h1:mt-0 first:prose-h2:mt-0 first:prose-h3:mt-0 first:prose-h4:mt-0 first:prose-h5:mt-0;
 }
@@ -9,6 +11,12 @@
 /* Override to remove the backtick */
 .hashnode-content-style :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::before, .hashnode-content-style :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::after  {
     content: none;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .prose code {
@@ -70,6 +78,36 @@ img {
   margin-top: 0;
 }
 
+.ant-carousel .slick-dots li button {
+  background-color: gray; /* color for inactive dots */
+}
+
+.ant-carousel .slick-dots li.slick-active button {
+  background-color: black; /* color for active dot */
+}
+
+#style-4::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-4::-webkit-scrollbar
+{
+	width: 3px;
+	background-color: #F5F5F5;
+}
+
+#style-4::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
+
+.word_spacing {
+  word-spacing: 12px;
+}
+
 @media (min-width: 768px) {
   .container__item:first-child {
     width: 100%;
@@ -80,6 +118,16 @@ img {
   }
   .container__item:last-child {
     margin-right: 0;
+  }
+}
+
+@media (max-width: 890px) {
+  .gallery-container {
+    max-height: 15rem;
+    overflow-y: scroll;
+  }
+  .container__item{
+    width: 30vw;
   }
 }
 

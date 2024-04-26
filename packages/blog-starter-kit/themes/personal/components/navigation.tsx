@@ -1,37 +1,53 @@
-import React, { useState } from 'react';
-import { Menu } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Menu, Spin } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const { Item } = Menu;
 
 const Navigation: React.FC = () => {
-  const [current, setCurrent] = useState('home');
+  const router = useRouter();
+  const [current, setCurrent] = useState(router.pathname);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = (e: any) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setIsLoading(true);
+    };
+
+    const handleRouteChangeComplete = (url: string) => {
+      setCurrent(url);
+      setIsLoading(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+  }, []);
 
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home">
-        <Link href="/">Home</Link>
+    <Menu selectedKeys={[current]} mode="horizontal">
+      <Item key="/">
+        <Link href="/">About</Link>
       </Item>
-      <Item key="blog">
+      <Item key="/blog">
         <Link href="/blog">Blog</Link>
       </Item>
-      <Item key="work">
+      <Item key="/work">
         <Link href="/work">Work</Link>
       </Item>
-      <Item key="projects">
-        <Link href="/projects">Projects</Link>
+      <Item key="/skills" >
+        <Link href="/skills">Skills</Link>
       </Item>
-      <Item key="connect">
-        <Link href="/connect">Connect</Link>
-      </Item>
-      <Item key="testimonials">
-        <Link href="/testimonials">Testimonials</Link>
-      </Item>
+      {isLoading && (
+        <Item key="loading" disabled>
+          <Spin size="small" />
+        </Item>
+      )}
     </Menu>
   );
 };

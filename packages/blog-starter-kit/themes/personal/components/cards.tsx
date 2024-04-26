@@ -1,6 +1,9 @@
 import React from 'react';
 import { GithubFilled, LinkOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Button, Card, Tooltip } from 'antd';
+import { PROJECT } from '../lib/constants/constant';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 const { Meta } = Card;
 
@@ -23,10 +26,10 @@ const truncateText = (text: string, length: number) => {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => (
   <Card
-    style={{ width: 300 }}
+    style={{ maxWidth: "max-content", width: "18rem" }}
     cover={
       <a href={project.projectUrl} target="_blank" rel="noopener noreferrer">
-        <img alt={project.title} src={project.coverImage} />
+        <img alt={project.title} src={project.coverImage} className=' max-h-[12rem]'/>
       </a>
     }
     size='small'
@@ -41,9 +44,39 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => (
   >
     <Meta
       title={project.title}
-      description={truncateText(project.description, 150)}
+      description={truncateText(project.description, 90)}
     />
   </Card>
 );
 
-export default ProjectCard;
+const Carousel = dynamic(() => import('antd').then(module => module.Carousel));
+
+const Project = () => {
+  return (
+    <React.Fragment>
+      					<h1 className='text-center font-mono text-[30px]'>Projects</h1>
+
+<div className='grid justify-items-center justify-center'>
+  <div className='p-[22px] bg-[#c8c8c8] rounded-[15px] w-[16rem] sm:w-[21rem]'>
+    <Carousel autoplay dotPosition='bottom' dots>
+      {PROJECT.map((project) => (
+        <div key={project.id} className='grid grid-cols-1 justify-items-center items-center place-items-center w-[18rem]'>
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </Carousel>
+  </div>
+  <Tooltip title="Take me to Github" placement="bottom" className='mt-3'>
+    <Link href='https://github.com/Shivam-Katare?tab=repositories' target='_blank'>
+      <Button className='bg-black text-white hover:bg-white' icon={<GithubFilled />}>
+        See all on Github
+      </Button>
+    </Link>
+  </Tooltip>
+</div>
+    </React.Fragment>
+  )
+}
+
+export default Project;
+
