@@ -77,7 +77,7 @@ export const Header = () => {
 
 	return (
 		<header className="border-b bg-white py-5 dark:white dark:bg-white">
-			<Container className="grid grid-cols-4 gap-5 px-5">
+			<Container className="grid grid-cols-1 gap-5 px-5">
 				<div className="col-span-2 flex flex-1 flex-row items-center gap-2 lg:col-span-1">
 					<div className="lg:hidden">
 						<Button
@@ -92,7 +92,7 @@ export const Header = () => {
 							<PublicationSidebar navbarItems={navbarItems} toggleSidebar={toggleSidebar} />
 						)}
 					</div>
-					<div className="hidden lg:block">
+					<div className="hidden w-full lg:block">
 						<a href='https://shivamkatare.vercel.app' target='_blank' className='text-[3rem] font-medium'>
 							Shivam Katare
 						</a>
