@@ -46,7 +46,9 @@ function PublicationSidebar(props: Props) {
 					<div className="blog-sidebar-header w-full shrink-0 py-6">
 						<div className="flex items-center justify-between pl-8 pr-4">
 							<div className="!text-xl">
-								<PublicationLogo isSidebar />
+								<a href='https://shivamkatare.vercel.app' target='_blank' className='text-[2rem] font-medium'>
+									Shivam Katare
+								</a>
 							</div>
 
 							<DialogPrimitive.Close asChild>
