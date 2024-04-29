@@ -62,7 +62,7 @@ export const Footer = () => {
 				</div>
 				<hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
 				<div className="flex items-center justify-center">
-					<span className="text-sm text-white text-center">© 2024 <a href="https://shivamkatare.vercel.app" className="hover:underline">Shivam Katare</a>. All Rights Reserved.
+					<span className="text-sm text-white text-center">© {new Date().getFullYear()} <a href="https://shivamkatare.vercel.app" target='_blank' className="hover:underline">Shivam Katare</a>. All Rights Reserved.
 					</span>
 				</div>
 			</div>
